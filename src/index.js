@@ -19,3 +19,4 @@ app.listen(app.get('Port'),()=>{
 
 //llamando el router
 app.use('/categoria',require('./routes/categoria.router'));
+app.use('/proveedores',require('./routes/proveedores.router'));
