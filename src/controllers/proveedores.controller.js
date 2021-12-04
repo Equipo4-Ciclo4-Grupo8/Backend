@@ -81,23 +81,23 @@ proveedoresController.borrar= async (req,res,next)=>{
 proveedoresController.actualizar= async (req,res,next)=>{
     
         try {
-            const check = await proveedores.findOne({celular:req.body.nombre});
+            const check = await proveedores.findOne({celular:req.body.celular});
             if (!check ){
                 const actualizar = await proveedores.updateOne({_id:req.body._id},{
                 descripcion: req.body.descripcion,
                 foto: req.body.foto,
                 estado: req.body.estado,
-                celular: req.body.estado,
-                calificacion: req.body.estado,
-                precioxhora: req.body.estado                      })
+                celular: req.body.celular,
+                calificacion: req.body.calificacion,
+                precioxhora: req.body.precioxhora                      })
                 res.status(200).json(actualizar)
             }else {
                 const actualizar = await proveedores.updateOne({_id:req.body._id},{
                 descripcion: req.body.descripcion,
                 foto: req.body.foto,
                 estado: req.body.estado,
-                calificacion: req.body.estado,
-                precioxhora: req.body.estado  })
+                calificacion: req.body.calificacion,
+                precioxhora: req.body.precioxhora  })
                 res.status(200).json(actualizar)
             }
         } catch (error) {
