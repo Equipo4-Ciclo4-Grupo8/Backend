@@ -7,9 +7,15 @@ const Auth = require('../helper/Auth')
 router.post('/add',    proveedoresController.crearProveedor); //no olvidar poner la verificacion de token, 'Auth.verificarToken,'
 
 //listarxfiltro pero si no se le pasa parametros muestra todos los 'activos'
-router.get('/list',  proveedoresController.listarxvalorbusqueda)
+router.get('/listxfiltro',  proveedoresController.listarxvalorbusqueda)
 
 //listarTodo
 router.get('/listTodo',  proveedoresController.list)
+
+//borrar
+router.delete('/borrar',  proveedoresController.borrar) 
+
+//update
+router.put('/actualizar', proveedoresController.actualizar)
 
 module.exports = router;

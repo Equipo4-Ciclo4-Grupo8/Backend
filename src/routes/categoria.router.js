@@ -7,7 +7,7 @@ const Auth = require('../helper/Auth')
 router.post('/add',    categoriaController.crearCategorias); //no olvidar poner la verificacion de token, 'Auth.verificarToken,'
 
 //listarxfiltro pero si no se le pasa parametros muestra todos los 'activos'
-router.get('/list',  categoriaController.listarxvalorbusqueda)
+router.get('/listxfiltro',  categoriaController.listarxvalorbusqueda)
 
 //listarActivos
 router.get('/listActivos',  categoriaController.listActivos)

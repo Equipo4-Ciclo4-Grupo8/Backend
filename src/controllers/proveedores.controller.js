@@ -26,7 +26,7 @@ proveedoresController.crearProveedor = async(req, res, next) =>{
 proveedoresController.list= async (req,res,next)=>{
     try {
         const registros = await proveedores.find(
-        ).sort({date: -1 });
+        ).sort({date: -1 }).populate('categoria' ,{nombre:1,estado:1,codigo:1});
         res.status(200).json(registros);
     } catch (error) {
         res.status(500).send({
@@ -41,7 +41,7 @@ proveedoresController.list= async (req,res,next)=>{
 proveedoresController.listarxvalorbusqueda= async (req,res,next)=>{
     try {
         let valorBusqueda= req.headers.filtro; // se le puede poner '.filtro' o cualquier otra cosa(eso va en en 'filtro' = 'lo que se quiera buscar' en postman ),
-        const registros = await categorias.find({$and:[
+        const registros = await proveedores.find({$and:[
 
             {$or:[
                 {profesion:new RegExp(valorBusqueda,'i')},
@@ -49,7 +49,7 @@ proveedoresController.listarxvalorbusqueda= async (req,res,next)=>{
                  //esta expresion regular encuentra por nombre o rol, y busca coincidencias 'i'=includes//si uno no le pasa valorBusqueda devuelve todo  
             ]},{estado:"Activo"}
         ]}
-             ).sort({date: -1 });                   
+             ).sort({date: -1 }).populate('categoria' ,{nombre:1,estado:1,codigo:1});                   
         res.status(200).json(registros);
 
         
@@ -62,6 +62,54 @@ proveedoresController.listarxvalorbusqueda= async (req,res,next)=>{
     }
 
 };
+//metodo borrar
+proveedoresController.borrar= async (req,res,next)=>{
+    try {
+        
+        const borrar = await proveedores.findByIdAndDelete({_id:req.body._id});
+        res.status(200).json(borrar);
+    } catch (error) {
+        res.status(500).send({
+            message: "ocurrio un error interno" + ": " + error.message
+            
+        });
+        next(error);
+    }
+
+};
+//metodo update
+proveedoresController.actualizar= async (req,res,next)=>{
+    
+        try {
+            const check = await proveedores.findOne({celular:req.body.nombre});
+            if (!check ){
+                const actualizar = await proveedores.updateOne({_id:req.body._id},{
+                descripcion: req.body.descripcion,
+                foto: req.body.foto,
+                estado: req.body.estado,
+                celular: req.body.estado,
+                calificacion: req.body.estado,
+                precioxhora: req.body.estado                      })
+                res.status(200).json(actualizar)
+            }else {
+                const actualizar = await proveedores.updateOne({_id:req.body._id},{
+                descripcion: req.body.descripcion,
+                foto: req.body.foto,
+                estado: req.body.estado,
+                calificacion: req.body.estado,
+                precioxhora: req.body.estado  })
+                res.status(200).json(actualizar)
+            }
+        } catch (error) {
+            res.status(500).send({
+                message: error.message
+                
+            });
+            next(error);
+        }
+       
+}
+
 
 
 

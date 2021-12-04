@@ -8,6 +8,12 @@ const categoriasSchema = new Schema({
         unique: true
 
     },
+    codigo:{
+        type:Number,
+        required:[true,' solo numeros'],
+        unique: true,
+        min:0
+    },
 
     nombre:{
         type: String,
